@@ -54,13 +54,15 @@ class SubtypeRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Subtype
-//    {
-//        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function findOneByNameAndTypeId($subtypeName, $typeId): array
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.name = :val')
+            ->setParameter('val', $subtypeName)
+            ->andWhere('s.type = :valueType')
+            ->setParameter('valueType', $typeId)
+            ->getQuery()
+            ->Result()
+        ;
+    }
 }

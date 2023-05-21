@@ -28,10 +28,13 @@
         "symfony/serializer": "6.2.*",
         "symfony/twig-bundle": "6.2.*",
         "symfony/validator": "6.2.*",
-        "symfony/yaml": "6.2.*"
+        "symfony/yaml": "6.2.*",
+        "vich/uploader-bundle": "^2.1"
     },
     "require-dev": {
-        "symfony/maker-bundle": "^1.48"
+        "symfony/maker-bundle": "^1.48",
+        "symfony/stopwatch": "6.2.*",
+        "symfony/web-profiler-bundle": "6.2.*"
     },
     "config": {
         "allow-plugins": {

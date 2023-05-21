@@ -2,32 +2,47 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
 use App\Repository\HistorizationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: HistorizationRepository::class)]
+#[ApiResource]
 class Historization
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['historization'])]
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Groups(['historization'])]
     private ?\DateTimeInterface $date = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['historization'])]
     private ?string $comment = null;
 
     #[ORM\OneToMany(mappedBy: 'historization', targetEntity: HistorizationFile::class)]
+    #[Groups(['historization'])]
+    #[Vich\UploadableField(mapping: 'products', fileNameProperty: 'imageName', size: 'imageSize')]
     private Collection $files;
 
     #[ORM\ManyToOne(inversedBy: 'historizations')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['historization'])]
     private ?Type $type = null;
+
+    #[ORM\ManyToOne(inversedBy: 'historizations')]
+    #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['historization'])]
+    private ?Subtype $subtype = null;
 
     public function __construct()
     {
@@ -101,6 +116,18 @@ class Historization
     public function setType(?Type $type): self
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getSubtype(): ?Subtype
+    {
+        return $this->subtype;
+    }
+
+    public function setSubtype(?Subtype $subtype): self
+    {
+        $this->subtype = $subtype;
 
         return $this;
     }
